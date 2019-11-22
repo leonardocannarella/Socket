@@ -79,7 +79,7 @@ int main(int argc, char argv[]) {
 
 	char tmp[80];
 	
-	while( i>=0){	
+	while( i<10){	
 		//Receive a network packet and copy in to buffer
 		memset(buffer,0,MAX_PACKET_SIZE);
 		buflen=recv(sock_r,buffer,MAX_PACKET_SIZE,0);
@@ -91,9 +91,8 @@ int main(int argc, char argv[]) {
 		
 		struct my_machdr *mac = (struct my_machdr *)(buffer);
 		                
-		sprintf(tmpbuf, "%02X-%02X-%02X-%02X-%02X-%02X", mac->dest[0],mac->dest[1],mac->dest[2],mac->dest[3],mac->dest[4],mac->dest[5]);
-		if ( (strcmp("FF-FF-FF-FF-FF-FF",tmpbuf)) == 0) 
-		{		// IF di controllo dell'indirizzo MAC; aggiornare o commentare il comando
+		sprintf(tmpbuf, "%02X-%02X-%02X-%02X-%02X-%02X", mac->source[0],mac->source[1],mac->source[2],mac->source[3],mac->source[4],mac->source[5]);
+		if ( strcmp("38-63-BB-E6-24-CF",tmpbuf) == 0) {		// IF di controllo dell'indirizzo MAC; aggiornare o commentare il comando
 			printf("\n\n**************** Pacchetto N. %d\n\n", i);
 			printf("\n***Ethernet Header\n");
 			printf("\t|-Destination Address :\t%.2X-%.2X-%.2X-%.2X-%.2X-%.2X \t%s\n", mac->dest[0],mac->dest[1],mac->dest[2],mac->dest[3],mac->dest[4],mac->dest[5], cast(mac->dest,tmp) );
